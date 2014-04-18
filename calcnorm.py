@@ -5,9 +5,9 @@ import numpy as np
 import scipy.sparse as sp;
 
 
-trainMtx=np.load("./meta data/trainSparseMtx-min.npy").item();
+trainMtx=np.load("./meta data/trainSparseMtx.npy").item();
 
-testMtx=np.load('./meta data/trainSparseMtx-min.npy').item();
+testMtx=np.load('./meta data/testSparseMtx.npy').item();
 
 print "calculating norm"
  
