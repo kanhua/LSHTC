@@ -32,11 +32,11 @@ int main(void)
 	struct svm_problem train_prob;
 	struct svm_problem test_prob;
 
-	char *datapath="C:\\Users\\Kan-Hua\\Dropbox\\Documents in Dropbox\\Programming projects\\Fun with Kaggle\\LSHTC\\source data\\";
+//	char *datapath="C:\\Users\\Kan-Hua\\Dropbox\\Documents in Dropbox\\Programming projects\\Fun with Kaggle\\LSHTC\\source data\\";
 	
-	//const char *datapath="./source data/";	
-	const char *trainminfile="train-sk-min.csv";
-	const char *testminfile="test-sk-min.csv";;
+	const char *datapath="./source data/";	
+	const char *trainminfile="train-sklearn.csv";
+	const char *testminfile="test-sklearn.csv";;
 	const char *testfile2="C:\\Users\\Kan-Hua\\Dropbox\\Documents in Dropbox\\Programming projects\\Fun with Kaggle\\LSHTC\\source data\\train-sklearn.csv";
 	
 	char *fullname=Malloc(char,strlen(datapath)+20);
@@ -59,7 +59,7 @@ int main(void)
 	starttime=omp_get_wtime();
 	printf("%f\n",starttime);
 	double *result=new double[1];
-	result=spsmulti(test_prob,train_prob,result);
+	result=spsmulti(train_prob,train_prob,result);
 	printf("%f\n",omp_get_wtime());
 
 	//print the result
@@ -82,6 +82,8 @@ int main(void)
 
 		fclose(ofp);
 	}
+	printf("available threads:%d\n",omp_get_num_threads());
+        printf("available procs:%d\n",omp_get_num_procs());
 	int d=0;
 	scanf("?",&d);
 }
@@ -172,7 +174,7 @@ double *spsmulti(struct svm_problem &prob1,struct svm_problem &prob2,double *res
 		
 		fprintf(fp[threadnum],"\n");
 		free(node_arr);
-		//fprintf(fp[threadnum],"%d lines has been done,%d\n",i,totalelements);
+		//printf("%d lines has been done,%d\n",i,totalelements);
 		linesdone++;
 		printf("%d lines done, time elepased:%.0f\n",linesdone,omp_get_wtime()-starttime);
 	}
