@@ -5,7 +5,7 @@
 #include "omp.h"
 #include <ctype.h>
 
-#define NUM_THREADS 4
+#define NUM_THREADS 10
 
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type))
 
@@ -32,8 +32,8 @@ int main(void)
 	//char *datapath="C:\\Users\\Kan-Hua\\Dropbox\\Documents in Dropbox\\Programming projects\\Fun with Kaggle\\LSHTC\\source data\\";
 	
 	const char *datapath="./source data/";	
-	const char *trainminfile="train-sk-min.csv";
-	const char *testminfile="test-sk-min.csv";;
+	const char *trainminfile="train-sklearn.csv";
+	const char *testminfile="test-sklearn.csv";;
 	const char *testfile2="C:\\Users\\Kan-Hua\\Dropbox\\Documents in Dropbox\\Programming projects\\Fun with Kaggle\\LSHTC\\source data\\train-sklearn.csv";
 	
 	char *fullname=Malloc(char,strlen(datapath)+20);
@@ -123,7 +123,7 @@ double *spsmulti(struct svm_problem &prob1,struct svm_problem &prob2,double *res
 		fp[m]=fopen(output_file_name,"w");
 	}
 	
-
+	int linesdone=0;
 	#pragma omp parallel for
 	for(int i=0;i<prob1.l;i++)
 	{
@@ -170,7 +170,8 @@ double *spsmulti(struct svm_problem &prob1,struct svm_problem &prob2,double *res
 		fprintf(fp[threadnum],"\n");
 		free(node_arr);
 		//fprintf(fp[threadnum],"%d lines has been done,%d\n",i,totalelements);
-		
+		linesdone++;
+		printf("%d lines done\n",linesdone);
 	}
 	printf("total elements are %d\n",totalelements);
 	for (int m=0;m<NUM_THREADS;m++)
